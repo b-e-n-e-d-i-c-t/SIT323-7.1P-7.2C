@@ -1,0 +1,6 @@
+node_modules/
+logger/
+combined.log
+error.log
+info.log
+requests.rest

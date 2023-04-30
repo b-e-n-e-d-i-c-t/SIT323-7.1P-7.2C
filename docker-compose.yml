@@ -1,0 +1,9 @@
+
+version: '3'
+services:
+  webcalculator:
+    build:
+      context: .
+      dockerfile: dockerFile
+    ports:
+      - "3000:3000"
