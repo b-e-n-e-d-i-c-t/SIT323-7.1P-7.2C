@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: my-container
-        image: nichollsb/5.1p:test-4
+        image: nichollsb/mongo:v1
         ports:
         - containerPort: 3000

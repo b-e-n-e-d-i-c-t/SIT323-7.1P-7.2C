@@ -1,0 +1,34 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: mongo-backup
+spec:
+  schedule: "0 0 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: mongo
+            image: mongo:latest
+            command: ["/bin/sh"]
+            args: ["-c", "mongodump --host=mongo-svc --username=admin --password=password --out=/backup"]
+            env:
+              - name: admin
+                valueFrom:
+                  secretKeyRef:
+                    name: mongo-secret
+                    key: username
+              - name: password
+                valueFrom:
+                  secretKeyRef:
+                    name: mongo-secret
+                    key: password
+            volumeMounts:
+            - name: backup
+              mountPath: /backup
+          restartPolicy: Never
+          volumes:
+          - name: backup
+            persistentVolumeClaim:
+              claimName: backup-pvc
